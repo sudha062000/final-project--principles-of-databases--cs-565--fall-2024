@@ -5,7 +5,8 @@ CREATE USER IF NOT EXISTS 'passwords_user'@'localhost' IDENTIFIED BY 'k(D2Whiue9
 GRANT ALL PRIVILEGES ON passwords.* TO 'passwords_user'@'localhost';
 
 USE passwords;
-SOURCE create-accounts-table.sql
+
 SOURCE create-users-table.sql;
+SOURCE create-accounts-table.sql;
 SOURCE populate-accounts-table.sql;
 SOURCE populate-users-table.sql;

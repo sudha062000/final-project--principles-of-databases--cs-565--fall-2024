@@ -5,6 +5,6 @@ CREATE TABLE accounts (
     url VARCHAR(255),
     password VARBINARY(255),
     comment TEXT,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (user_id) REFERENCES Users(user_id)
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    
 );
