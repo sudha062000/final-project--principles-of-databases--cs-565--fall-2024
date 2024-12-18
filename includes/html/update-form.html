@@ -1,18 +1,28 @@
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
   <fieldset>
     <legend>Update</legend>
-    UPDATE artist SET
+    
+    <label for="current-attribute">Select column to update:</label>
     <select name="current-attribute" id="current-attribute">
-      <option>artist_name</option>
-      <option>artist_id</option>
-    </select>
-    = <input type="text" name="new-attribute" required> WHERE
+      <option value="site_name">Site/App Name</option>
+      <option value="url">URL</option>
+      <option value="password">Password</option>
+      <option value="comment">Comment</option>
+    </select><br>
+
+    <label for="new-attribute">New value:</label>
+    <input type="text" name="new-attribute" id="new-attribute" required><br>
+
+    <label for="query-attribute">Match by column:</label>
     <select name="query-attribute" id="query-attribute">
-      <option>artist_id</option>
-      <option>artist_name</option>
-    </select>
-    = <input type="text" name="pattern" required>
+      <option value="account_id">Account ID</option>
+      <option value="site_name">Site/App Name</option>
+    </select><br>
+
+    <label for="pattern">Value to match:</label>
+    <input type="text" name="pattern" id="pattern" required><br>
+
     <input type="hidden" name="submitted" value="2">
-    <p><input type="submit" value="update"></p>
+    <p><input type="submit" value="Update"></p>
   </fieldset>
 </form>

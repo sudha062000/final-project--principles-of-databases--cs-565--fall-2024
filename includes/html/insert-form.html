@@ -1,8 +1,36 @@
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
   <fieldset>
-    <legend>Insert</legend>
-    INSERT INTO artist VALUES ( <input type="text" name="artist-id" placeholder="artist_id" required>, <input type="text" name="artist-name" placeholder="artist_name" required> );
+    <legend>Insert New Account</legend>
+
+    <!-- User ID - Assumes this is generated elsewhere, such as from a user login system -->
+    <label for="user-id">User ID:</label>
+    <input type="number" name="user-id" id="user-id" required><br>
+
+    <!-- Site/App Name -->
+    <label for="site-name">Site/App Name:</label>
+    <input type="text" name="site-name" id="site-name" required><br>
+
+    <!-- URL -->
+    <label for="url">URL:</label>
+    <input type="url" name="url" id="url" required><br>
+
+    <!-- Email Address -->
+    <label for="email">Email Address:</label>
+    <input type="email" name="email" id="email" required><br>
+
+    <!-- Username -->
+    <label for="username">Username:</label>
+    <input type="text" name="username" id="username" required><br>
+
+    <!-- Password -->
+    <label for="password">Password:</label>
+    <input type="password" name="password" id="password" required><br>
+
+    <!-- Comment -->
+    <label for="comment">Comment:</label>
+    <textarea name="comment" id="comment" rows="4" required></textarea><br>
+
     <input type="hidden" name="submitted" value="3">
-    <p><input type="submit" value="insert"></p>
+    <p><input type="submit" value="Insert"></p>
   </fieldset>
 </form>

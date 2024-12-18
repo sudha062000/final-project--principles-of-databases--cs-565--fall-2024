@@ -1,63 +1,60 @@
 <?php
-require_once "config.php";
-
-function connectDB() {
+// Database connection
+function getDB() {
+    include_once "includes/php/config.php";
     try {
-        $dsn = "mysql:host=" . DBHOST . ";dbname=" . DBNAME . ";charset=utf8mb4";
-        $pdo = new PDO($dsn, DBUSER, DBPASS, [
-            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-        ]);
-        return $pdo;
+        $db = new PDO('mysql:host=' . DBHOST . ';dbname=' . DBNAME, DBUSER, DBPASS);
+        $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        return $db;
     } catch (PDOException $e) {
-        die("Database connection failed: " . $e->getMessage());
+        echo "Error connecting to database: " . $e->getMessage();
+        exit;
     }
 }
 
-// INSERT Operation
-function insertAccount($userId, $siteName, $url, $password, $comment) {
-    $pdo = connectDB();
-    $stmt = $pdo->prepare("
-        INSERT INTO Accounts (user_id, site_name, url, password, comment)
-        VALUES (?, ?, ?, AES_ENCRYPT(?, 'encryption_key'), ?)
-    ");
-    $stmt->execute([$userId, $siteName, $url, $password, $comment]);
+// Insert a new account
+function insertAccount($user_id, $site_name, $url, $password, $comment) {
+    $db = getDB();
+    $sql = "INSERT INTO Accounts (user_id, site_name, url, password, comment) 
+            VALUES (:user_id, :site_name, :url, AES_ENCRYPT(:password, 'encryption_key'), :comment)";
+    $stmt = $db->prepare($sql);
+    $stmt->execute([
+        ':user_id' => $user_id,
+        ':site_name' => $site_name,
+        ':url' => $url,
+        ':password' => $password,
+        ':comment' => $comment
+    ]);
 }
 
-// SEARCH Operation
+// Search for accounts by site_name or comment
 function searchAccounts($searchTerm) {
-    $pdo = connectDB();
-    $stmt = $pdo->prepare("
-        SELECT u.first_name, u.last_name, u.username, u.email, a.site_name, a.url, 
-               CAST(AES_DECRYPT(a.password, 'encryption_key') AS CHAR) AS password, a.comment
-        FROM Users u
-        JOIN Accounts a ON u.id = a.user_id
-        WHERE u.first_name LIKE ? OR u.last_name LIKE ? OR u.username LIKE ? OR u.email LIKE ?
-           OR a.site_name LIKE ? OR a.url LIKE ? OR a.comment LIKE ?
-    ");
-    $likeTerm = "%" . $searchTerm . "%";
-    $stmt->execute([$likeTerm, $likeTerm, $likeTerm, $likeTerm, $likeTerm, $likeTerm, $likeTerm]);
-    return $stmt->fetchAll();
+    $db = getDB();
+    $sql = "SELECT * FROM Accounts WHERE site_name LIKE :searchTerm OR comment LIKE :searchTerm";
+    $stmt = $db->prepare($sql);
+    $stmt->execute([
+        ':searchTerm' => '%' . $searchTerm . '%'
+    ]);
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
-// UPDATE Operation
-function updateAccount($column, $newValue, $whereColumn, $whereValue) {
-    $pdo = connectDB();
-    $stmt = $pdo->prepare("
-        UPDATE Accounts
-        SET $column = ?
-        WHERE $whereColumn = ?
-    ");
-    $stmt->execute([$newValue, $whereValue]);
+// Update account based on selected criteria
+function updateAccount($currentAttribute, $newAttribute, $queryAttribute, $pattern) {
+    $db = getDB();
+    $sql = "UPDATE Accounts SET $currentAttribute = :newAttribute WHERE $queryAttribute = :pattern";
+    $stmt = $db->prepare($sql);
+    $stmt->execute([
+        ':newAttribute' => $newAttribute,
+        ':pattern' => $pattern
+    ]);
 }
 
-// DELETE Operation
-function deleteAccount($column, $value) {
-    $pdo = connectDB();
-    $stmt = $pdo->prepare("
-        DELETE FROM Accounts
-        WHERE $column = ?
-    ");
-    $stmt->execute([$value]);
+// Delete an account based on a pattern
+function deleteAccount($currentAttribute, $pattern) {
+    $db = getDB();
+    $sql = "DELETE FROM Accounts WHERE $currentAttribute = :pattern";
+    $stmt = $db->prepare($sql);
+    $stmt->execute([
+        ':pattern' => $pattern
+    ]);
 }
-?>

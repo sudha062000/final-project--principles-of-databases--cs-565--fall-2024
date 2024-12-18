@@ -1,8 +1,10 @@
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
   <fieldset>
     <legend>Search</legend>
-    <input type="text" name="search" autofocus required>
+    <label for="search">Search for site/app name or comment:</label>
+    <input type="text" name="search" id="search" autofocus required><br>
+
     <input type="hidden" name="submitted" value="1">
-    <p><input type="submit" value="search"></p>
+    <p><input type="submit" value="Search"></p>
   </fieldset>
 </form>
