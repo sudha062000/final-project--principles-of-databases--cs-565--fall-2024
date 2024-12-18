@@ -1,4 +1,4 @@
-INSERT INTO accounts (user_id, site_name, url, password, comment)
+INSERT INTO Accounts (user_id, site_name, url, password, comment)
 VALUES 
 (1, 'Facebook', 'https://facebook.com', AES_ENCRYPT('password1', 'encryption_key'), 'Personal account'),
 (2, 'Twitter', 'https://twitter.com', AES_ENCRYPT('password2', 'encryption_key'), 'Work account'),

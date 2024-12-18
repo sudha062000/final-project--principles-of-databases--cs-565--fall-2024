@@ -6,7 +6,7 @@ GRANT ALL PRIVILEGES ON passwords.* TO 'passwords_user'@'localhost';
 
 USE passwords;
 
-SOURCE create-users-table.sql;
-SOURCE create-accounts-table.sql;
-SOURCE populate-accounts-table.sql;
-SOURCE populate-users-table.sql;
+SOURCE create-Users-table.sql;
+SOURCE create-Accounts-table.sql;
+SOURCE populate-Accounts-table.sql;
+SOURCE populate-Users-table.sql;

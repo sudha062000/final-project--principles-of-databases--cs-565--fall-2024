@@ -1,4 +1,4 @@
-INSERT INTO users (first_name, last_name, username, email) 
+INSERT INTO Users (first_name, last_name, username, email) 
 VALUES 
 ('John', 'Doe', 'johndoe', 'johndoe@example.com'),
 ('Jane', 'Smith', 'janesmith', 'janesmith@example.com'),

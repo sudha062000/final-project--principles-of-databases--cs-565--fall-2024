@@ -1,4 +1,4 @@
-CREATE TABLE accounts (
+CREATE TABLE Accounts (
     account_id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT,
     site_name VARCHAR(255),
