@@ -1,10 +1,13 @@
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
   <fieldset>
-    <legend>Search</legend>
-    <label for="search">Search for site/app name or comment:</label>
-    <input type="text" name="search" id="search" autofocus required><br>
+    <legend>Search for Account</legend>
 
+    <!-- Search Keyword -->
+    <input type="text" name="search" placeholder="Search by site/app name or comment" required autofocus>
+    
+    <!-- Hidden field to indicate form submission -->
     <input type="hidden" name="submitted" value="1">
+    
     <p><input type="submit" value="Search"></p>
   </fieldset>
 </form>
